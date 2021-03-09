@@ -71,7 +71,8 @@ int DeleteNode(Node **phead, double x) {
 	}
 
 	/* if not the first node */
-	for (pnode=*phead, position=2; pnode->next; pnode=pnode->next, position++) {
+	for (pnode = *phead, position = 2; pnode->next;
+			pnode = pnode->next, position++) {
 		/* loop for pnode->next->data == x */
 		if (pnode->next->data == x) {
 			/* delete node */
@@ -81,7 +82,7 @@ int DeleteNode(Node **phead, double x) {
 			return position;
 		}
 	}
-	
+
 	/* if node not found, return 0 */
 	return 0;
 }
@@ -89,7 +90,7 @@ int DeleteNode(Node **phead, double x) {
 void DisplayList(Node *head) {
 	Node *pnode;
 	/* loop for each node */
-	for (pnode=head; pnode; pnode=pnode->next) {
+	for (pnode = head; pnode; pnode = pnode->next) {
 		printf("%f ", pnode->data);
 	}
 	/* new line at the end */
