@@ -102,6 +102,7 @@ void DisplayStack(Stack *stack) {
 
 void DestroyStack(Stack *stack) {
 	free(stack->data);
+	stack->data = NULL;
 	stack->size = 0;
 	stack->top = -1;
 }
