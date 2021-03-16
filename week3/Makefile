@@ -1,2 +1,2 @@
 stack:stack.c stack.h
-	gcc stack.c stack.h -Wall -o stack
+	gcc main.c stack.c stack.h -Wall -o stack
