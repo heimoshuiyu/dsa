@@ -111,6 +111,7 @@ void DisplayQueue(Queue *queue) {
 void DestroyQueue(Queue *queue) {
 	free(queue->values);
 	/* reset values */
+	queue->values = NULL;
 	queue->counter = 0;
 	queue->maxSize = 0;
 	queue->front = 0;
