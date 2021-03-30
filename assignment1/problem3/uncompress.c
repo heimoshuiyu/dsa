@@ -222,7 +222,7 @@ void ASTCompileNode(ASTNode *root, FILE *file) {
 
 		if (currNode->type == 2) {
 			/* repeat to compile child node */
-			for (int i = 0; i < currNode->repeat; i++) {
+			for (unsigned int i = 0; i < currNode->repeat; i++) {
 				/* recursion */
 				ASTCompileNode(currNode->child, file);
 			}
