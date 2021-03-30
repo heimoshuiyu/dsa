@@ -1,8 +1,8 @@
 #ifndef UNCOMPRESS
 #define UNCOMPRESS
 
-#include <stddef.h>
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdio.h>
 
 #include "struct.h"
@@ -20,7 +20,8 @@ char ASTScan(ASTScanner *scanner, ASTNode **ret_node);
 char ASTScanAll(ASTTree *tree, ASTScanner *scanner);
 
 /* return the number before a string with index */
-unsigned int GetNumber(char *string, size_t start, size_t end, ASTString *other_string);
+unsigned int GetNumber(char *string, size_t start, size_t end,
+		ASTString *other_string);
 
 /* Useful function to check whether a char is a number */
 bool IsNumber(const char c);

@@ -8,9 +8,8 @@
 #ifndef MY_STRUCT_H
 #define MY_STRUCT_H
 
-#include <stddef.h>
 #include <stdbool.h>
-
+#include <stddef.h>
 
 /* Used for AST Node's string */
 typedef struct ASTString_str {

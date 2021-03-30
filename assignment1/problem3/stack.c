@@ -5,15 +5,14 @@
  * Stack, with functioin automaticlly increase the size
  */
 
-#include <stdio.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
 #include <assert.h>
 
 #include "stack.h"
-
 
 bool CreateStack(Stack *stack, int size) {
 	/* check */
@@ -68,7 +67,7 @@ bool Push(Stack *stack, ASTNode *x) {
 
 		/* delete old stack */
 		DestroyStack(stack);
-		
+
 		/* set new stack */
 		*stack = newStack;
 	}
@@ -95,7 +94,7 @@ void DisplayStack(Stack *stack) {
 
 	/* print the top pointer hint */
 	printf("top --> ");
-	
+
 	/* loop for stack data */
 	for (; top_p >= stack->data; top_p--) {
 

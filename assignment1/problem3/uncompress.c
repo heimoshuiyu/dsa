@@ -1,11 +1,11 @@
+#include <stdbool.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stddef.h>
 #include <string.h>
-#include <stdbool.h>
 
-#include "uncompress.h"
 #include "stack.h"
+#include "uncompress.h"
 
 ASTScanner *CreateASTScanner(char *string) {
 	/* Special case define in pdf */
@@ -43,12 +43,12 @@ char ASTScan(ASTScanner *scanner, ASTNode **ret_node) {
 		fprintf(stderr, "allocate ASTNode memory failed\n");
 		exit(1);
 	}
-	
+
 	/* read until end or '(' or ')',
 	 * after the loop, i point after '(' or ')' */
 	i = scanner->current_index;
 	while (i < scanner->length) {
-		if (scanner->string[i]=='(' || scanner->string[i] == ')') {
+		if (scanner->string[i] == '(' || scanner->string[i] == ')') {
 			i++;
 			break;
 		}
@@ -56,21 +56,23 @@ char ASTScan(ASTScanner *scanner, ASTNode **ret_node) {
 	}
 
 	/* if read ( */
-	if (scanner->string[i-1] == '(') {
+	if (scanner->string[i - 1] == '(') {
 		node->type = 2;
 
 		/* check is there is any number before ( */
-		if (i-1 == 0) {
+		if (i - 1 == 0) {
 			fprintf(stderr, "Syntax error: invailed value of repeat at begining\n");
 			return 1;
 		}
-		if (!IsNumber(scanner->string[i-2])) {
-			fprintf(stderr, "Syntax error: invailed value of repeat at index %ld\n", i-1);
+		if (!IsNumber(scanner->string[i - 2])) {
+			fprintf(stderr, "Syntax error: invailed value of repeat at index %ld\n",
+					i - 1);
 			return 1;
 		}
 
 		/* get number and the string before the number */
-		node->repeat = GetNumber(scanner->string, scanner->current_index, i-1, &node->string);
+		node->repeat = GetNumber(scanner->string, scanner->current_index, i - 1,
+				&node->string);
 		/* if the string exists */
 		if (node->string.string) {
 			/* change type to 1 */
@@ -79,22 +81,22 @@ char ASTScan(ASTScanner *scanner, ASTNode **ret_node) {
 			i = node->string.end;
 		}
 
-	/* if read ) */
-	} else if (scanner->string[i-1] == ')') {
+		/* if read ) */
+	} else if (scanner->string[i - 1] == ')') {
 		node->type = 3;
 
 		/* if there are string before ) */
-		if (i-1 != scanner->current_index) {
+		if (i - 1 != scanner->current_index) {
 
 			/* change type to 1 */
 			node->type = 1;
 			node->string.string = scanner->string;
 			node->string.start = scanner->current_index;
-			node->string.end = i-1;
+			node->string.end = i - 1;
 			i = i - 1;
 		}
 
-	/* until the end is a string */
+		/* until the end is a string */
 	} else {
 		node->type = 1;
 		node->string.string = scanner->string;
@@ -111,7 +113,8 @@ char ASTScan(ASTScanner *scanner, ASTNode **ret_node) {
 	return 0;
 }
 
-unsigned int GetNumber(char *string, size_t start, size_t end, ASTString *other_string) {
+unsigned int GetNumber(char *string, size_t start, size_t end,
+		ASTString *other_string) {
 	unsigned int result = 0;
 	size_t index = end - 1;
 
@@ -131,13 +134,11 @@ unsigned int GetNumber(char *string, size_t start, size_t end, ASTString *other_
 	return result;
 }
 
-bool IsNumber(const char c) {
-	return c >= '0' && c <= '9';
-}
+bool IsNumber(const char c) { return c >= '0' && c <= '9'; }
 
 unsigned int Power(int x, int y) {
 	unsigned int result = 1;
-	for (int i=1; i<y; i++) {
+	for (int i = 1; i < y; i++) {
 		result = result * x;
 	}
 	return result;
@@ -147,13 +148,8 @@ void DEBUG_NODE(ASTNode *root) {
 	ASTNode *currNode = root;
 	while (currNode) {
 		printf("[%p] type: %d, next: %p, child: %p, repeat: %d, string: %ld-%ld\n",
-					currNode,
-					currNode->type,
-					currNode->next,
-					currNode->child,
-					currNode->repeat,
-					currNode->string.start,
-					currNode->string.end);
+				currNode, currNode->type, currNode->next, currNode->child,
+				currNode->repeat, currNode->string.start, currNode->string.end);
 
 		if (currNode->type == 2) {
 			/* recursion to child */
@@ -226,14 +222,14 @@ void ASTCompileNode(ASTNode *root, FILE *file) {
 
 		if (currNode->type == 2) {
 			/* repeat to compile child node */
-			for (int i=0; i<currNode->repeat; i++) {
+			for (int i = 0; i < currNode->repeat; i++) {
 				/* recursion */
 				ASTCompileNode(currNode->child, file);
 			}
 
 		} else if (currNode->type == 1) {
 			/* print string */
-			for (size_t i=currNode->string.start; i<currNode->string.end; i++) {
+			for (size_t i = currNode->string.start; i < currNode->string.end; i++) {
 				fputc(currNode->string.string[i], file);
 			}
 		}
@@ -259,7 +255,7 @@ char ASTScanAll(ASTTree *tree, ASTScanner *scanner) {
 	}
 
 	/* scan until end */
-	while(err = ASTScan(scanner, &node), node) {
+	while (err = ASTScan(scanner, &node), node) {
 
 		/* raise error */
 		if (err != 0) {
@@ -272,7 +268,7 @@ char ASTScanAll(ASTTree *tree, ASTScanner *scanner) {
 			Pop(&tree->stack, &last);
 			free(node);
 			continue;
-		/* uf node type is 2, record in stack */
+			/* uf node type is 2, record in stack */
 		} else if (node->type == 2) {
 			Push(&tree->stack, node);
 		}
@@ -311,10 +307,10 @@ void Uncompress(char *string, FILE *file) {
 	}
 
 	/*
-	printf("---debug---\n");
-	DEBUG_NODE(tree->root);
-	printf("---debug---\n");
-	*/
+	   printf("---debug---\n");
+	   DEBUG_NODE(tree->root);
+	   printf("---debug---\n");
+	   */
 
 	/* compile */
 	ASTCompileTree(tree, file);
@@ -324,6 +320,4 @@ void Uncompress(char *string, FILE *file) {
 	DestroyASTScanner(scanner);
 }
 
-void DestroyASTScanner(ASTScanner *scanner) {
-	free(scanner);
-}
+void DestroyASTScanner(ASTScanner *scanner) { free(scanner); }
