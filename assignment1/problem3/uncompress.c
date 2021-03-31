@@ -1,3 +1,10 @@
+/*
+ * Author: Walter
+ * Student ID: 1930006025
+ * Assignment_1_Problem_3
+ * uncompress using AST method
+ */
+
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>

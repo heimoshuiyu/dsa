@@ -1,3 +1,32 @@
+/*
+ * Author: Walter
+ * Student ID: 1930006025
+ * Assignment_1_Problem_3
+ *
+ * AST (Abstract Syntax Tree) is a tree representation of the abstract
+ * syntactic structure of source code written in a programming language.
+ * Each node of the tree denotes a construct occurring in the source code.
+ *
+ * First of all, ASTScanner can scan the source code with LL(1) parser,
+ * return a token (ASTNode) of source code, there are 3 types of token.
+ * 1: string
+ * 2: loop start with repeat times
+ * 3: end loop
+ *
+ * Then ASTScanAll() can take all token into tree.
+ *
+ * For example:
+ * source code start3(miku6(aaa)asdf)end will generate the following tree:
+ *
+ * "start" -> 3 -> "end"
+ *            |
+ *            -> "miku" -> 6 -> "asdf"
+ *                         |
+ *                         -> "aaa" 
+ *
+ * ASTCompileTree() can compile the tree into output.
+ */
+
 #ifndef UNCOMPRESS
 #define UNCOMPRESS
 

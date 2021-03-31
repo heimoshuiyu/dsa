@@ -23,7 +23,7 @@ typedef struct ASTString_str {
 
 } ASTString;
 
-/* AST Node structure, describe in ./README.md */
+/* AST Node structure */
 typedef struct ASTNode_str {
 
 	/* 1: string, 2: left (, 3: right ) */
