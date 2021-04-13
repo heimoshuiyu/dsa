@@ -15,41 +15,51 @@ int main() {
 	/* size of test data */
 	int size = 100000;
 
-	int *A;
+	int *A1, *A2;
 	clock_t start, end;
 
-	printf("Allocating test data space...\n");
-	A = (int *)malloc(sizeof(int) * size);
-	if (A == NULL) {
-		printf("Fatal: can not allocate A space\n");
+	printf("Allocating test data space for A1...\n");
+	A1 = (int *)malloc(sizeof(int) * size);
+	if (A1 == NULL) {
+		printf("Fatal: can not allocate A1 space\n");
 		exit(1);
 	}
 
-	printf("Generating random integer...\n");
+	printf("Allocating test data space for A2...\n");
+	A2 = (int *)malloc(sizeof(int) * size);
+	if (A2 == NULL) {
+		printf("Fatal: can not allocate A2 space\n");
+		exit(1);
+	}
+
+	printf("Generating random integer for A1 and A2...\n");
 	for (int i = 0; i < size; i++) {
-		A[i] = rand();
+		A1[i] = A2[i] = rand();
 	}
 
 	printf("Testing merge sort...\n");
 	start = clock();
-	MergeSort(A, 0, size - 1);
+	MergeSort(A1, 0, size - 1);
 	end = clock();
 	PrintClockInterval(start, end);
 
-	printf("Checking result... %s\n", Check(A, size) ? "pass" : "fail");
-
-	printf("Generating random integer...\n");
-	for (int i = 0; i < size; i++) {
-		A[i] = rand();
-	}
+	printf("Checking result... %s\n", Check(A1, size) ? "pass" : "fail");
+	
+	printf("Freeing space of A1\n");
+	free(A1);
+	A1 = NULL;
 
 	printf("Testing insertion sort...\n");
 	start = clock();
-	InsertionSort(A, size);
+	InsertionSort(A2, size);
 	end = clock();
 	PrintClockInterval(start, end);
 
-	printf("Checking result... %s\n", Check(A, size) ? "pass" : "fail");
+	printf("Checking result... %s\n", Check(A2, size) ? "pass" : "fail");
+
+	printf("Freeing space of A2\n");
+	free(A2);
+	A2 = NULL;
 
 	return 0;
 }
