@@ -53,24 +53,46 @@ bool Check(int *A, int size) {
 }
 
 void QuickSort(int *A, int left, int right) {
+	int i, j;
+	int pivot;
+
 	if (left >= right) {
 		return;
 	}
-	int pi = Partition(A, left, right);
-	QuickSort(A, left, pi - 1);
-	QuickSort(A, pi + 1, right);
+
+	pivot = Median3(A, left, right);
+	i = left;
+	j = right - 1;
+
+	while (1) {
+		while (A[++i] < pivot) {}
+		while (A[--j] > pivot) {}
+		if (i >= j) {
+			break;
+		}
+		Swap(&A[i], &A[right - 1]);
+	}
+	Swap(&A[i], &A[right - 1]);
+
+	QuickSort(A, left, i -1);
+	QuickSort(A, i + 1, right);
 }
 
-int Partition(int *A, int left, int right) {
-	int pivot = A[right];
-	int i = left - 1;
-	for (int j = left; j < right; j++) {
-		if (A[j] < pivot) {
-			Swap(&A[++i], &A[j]);
-		}
+int Median3(int *A, int left, int right) {
+	int center = (left + right) / 2;
+	
+	if (A[left] > A[center]) {
+		Swap(&A[left], &A[center]);
 	}
-	Swap(&A[++i], &A[right]);
-	return i;
+	if (A[left] > A[right]) {
+		Swap(&A[left], &A[right]);
+	}
+	if (A[center] > A[right]) {
+		Swap(&A[center], &A[right]);
+	}
+
+	Swap(&A[center], &A[right - 1]);
+	return A[right - 1];
 }
 
 void HeapSort(int *A, int n) {

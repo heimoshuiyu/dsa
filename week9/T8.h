@@ -3,7 +3,7 @@
 
 void QuickSort(int *A, int left, int right);
 
-int Partition(int *A, int left, int right);
+int Median3(int *A, int left, int right);
 
 void HeapSort(int *A, int n);
 
