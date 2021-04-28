@@ -65,8 +65,10 @@ void QuickSort(int *A, int left, int right) {
 	j = right - 1;
 
 	while (1) {
-		while (A[++i] < pivot) {}
-		while (A[--j] > pivot) {}
+		while (A[++i] < pivot) {
+		}
+		while (A[--j] > pivot) {
+		}
 		if (i >= j) {
 			break;
 		}
@@ -74,13 +76,13 @@ void QuickSort(int *A, int left, int right) {
 	}
 	Swap(&A[i], &A[right - 1]);
 
-	QuickSort(A, left, i -1);
+	QuickSort(A, left, i - 1);
 	QuickSort(A, i + 1, right);
 }
 
 int Median3(int *A, int left, int right) {
 	int center = (left + right) / 2;
-	
+
 	if (A[left] > A[center]) {
 		Swap(&A[left], &A[center]);
 	}
@@ -130,6 +132,6 @@ void Swap(int *a, int *b) {
 }
 
 void PrintTimeDuration(clock_t start_time, clock_t end_time) {
-	printf("Time cost: %ld ms\n", (end_time - start_time) / (CLOCKS_PER_SEC / 1000));
+	printf("Time cost: %ld ms\n",
+			(end_time - start_time) / (CLOCKS_PER_SEC / 1000));
 }
-
