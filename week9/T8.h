@@ -1,3 +1,10 @@
+/*
+ * Author: Walter
+ * Student ID: 1930006025
+ * Week_9_task_8
+ * HeapSort
+ */
+
 #include <time.h>
 
 
