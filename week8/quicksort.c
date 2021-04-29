@@ -30,12 +30,12 @@ int main() {
 	end = clock();
 	_PrintClockInterval(start, end);
 
-	if(Check(A1, size_1)){
+	if (Check(A1, size_1)) {
 		printf("Checking result... pass\n");
 	} else {
-		printf("Checking result... fail\n");	
+		printf("Checking result... fail\n");
 	}
-	
+
 	printf("Freeing space of A1\n");
 	free(A1);
 	A1 = NULL;
@@ -58,12 +58,12 @@ int main() {
 	end = clock();
 	PrintClockInterval(start, end);
 
-	if(Check(A2, size_2)){
+	if (Check(A2, size_2)) {
 		printf("Checking result... pass\n");
 	} else {
-		printf("Checking result... fail\n");	
+		printf("Checking result... fail\n");
 	}
-	
+
 	printf("Freeing space of A2\n");
 	free(A2);
 	A2 = NULL;
@@ -73,29 +73,29 @@ int main() {
 
 void QuickSort(int *A, int left, int right) {
 	int q;
-	if (left >= right){
+	if (left >= right) {
 		return;
 	}
 	/* q is the position of the pivot */
 	q = Partition(A, left, right);
-	QuickSort(A, left, q-1);
-	QuickSort(A, q+1, right);
+	QuickSort(A, left, q - 1);
+	QuickSort(A, q + 1, right);
 }
 
 int Partition(int *A, int left, int right) {
 	/* p is the position of the pivot */
 	int p;
 	p = Pivot(A, left, right);
-	/* use i, j, pivot to locate left, right, and pivot */	
+	/* use i, j, pivot to locate left, right, and pivot */
 	int i, j, pivot;
 	Swap(A, p, right);
-	i = left, j = right-1, pivot = A[right];
-	while(true){
-		while (i<right && A[i]<pivot)
+	i = left, j = right - 1, pivot = A[right];
+	while (true) {
+		while (i < right && A[i] < pivot)
 			i++;
-		while (j>=left && A[j]>pivot)
+		while (j >= left && A[j] > pivot)
 			j--;
-		if (i<j)
+		if (i < j)
 			Swap(A, i++, j--);
 		else
 			break;
@@ -106,29 +106,29 @@ int Partition(int *A, int left, int right) {
 
 int Pivot(int *A, int left, int right) {
 	int middle = 0;
-	middle = (left + right)/2;
+	middle = (left + right) / 2;
 
-    if(A[left]>A[middle]){
-        if(A[middle]>A[right]){
+	if (A[left] > A[middle]) {
+		if (A[middle] > A[right]) {
 			middle = middle;
-		}else if(A[right]>A[left]) {
+		} else if (A[right] > A[left]) {
 			middle = left;
-		}else{
+		} else {
 			middle = right;
 		}
-    }else{
-        if(A[middle]<A[right]){
-        	middle = middle;
-		}else if(A[right]<A[left]){
+	} else {
+		if (A[middle] < A[right]) {
+			middle = middle;
+		} else if (A[right] < A[left]) {
 			middle = left;
-		}else{
+		} else {
 			middle = right;
 		}
 	}
 	return middle;
 }
 
-void Swap(int *A, int x,int y) {
+void Swap(int *A, int x, int y) {
 	int tmp;
 	tmp = A[x];
 	A[x] = A[y];
@@ -151,13 +151,11 @@ bool Check(int *A, int size) {
 }
 
 void PrintClockInterval(clock_t start, clock_t end) {
-	printf("the time cost of this algorithms is %ld ms\n", (end - start) / (CLOCKS_PER_SEC / 1000));
-} 
+	printf("the time cost of this algorithms is %ld ms\n",
+			(end - start) / (CLOCKS_PER_SEC / 1000));
+}
 
 /* use this to check small size of data */
 void _PrintClockInterval(clock_t start, clock_t end) {
 	printf("the time cost of this algorithms is %ld ms\n", (end - start));
-} 
-
-
-
+}
