@@ -74,6 +74,6 @@ void ASTCompileTree(ASTTree *tree, FILE *file);
 void ASTCompileNode(ASTNode *root, FILE *file);
 
 /* A short cut function, directly uncompress the raw string to file stream */
-void Uncompress(char *string, FILE *file);
+char* Uncompress(char *string);
 
 #endif

@@ -218,7 +218,7 @@ void ASTCompileTree(ASTTree *tree, FILE *file) {
 	ASTCompileNode(tree->root, file);
 
 	/* new line at the end */
-	fputc('\n', file);
+	//fputc('\n', file);
 }
 
 void ASTCompileNode(ASTNode *root, FILE *file) {
@@ -299,7 +299,10 @@ char ASTScanAll(ASTTree *tree, ASTScanner *scanner) {
 	return 0;
 }
 
-void Uncompress(char *string, FILE *file) {
+char* Uncompress(char *string) {
+	char *result = (char *)calloc(10000, sizeof(char));
+	char *ret = (char *)calloc(10000, sizeof(char));
+	FILE *file = fmemopen(result, 10000, "w");
 	char err;
 
 	/* create scanner and AST tree */
@@ -325,6 +328,17 @@ void Uncompress(char *string, FILE *file) {
 	/* free memory */
 	DestroyASTTree(tree);
 	DestroyASTScanner(scanner);
+
+	fclose(file);
+	file = fmemopen(result, strlen(result), "r");
+	char ch;
+	int i=0;
+	while((ch = fgetc(file)) != EOF) {
+		ret[i++] = ch;
+	}
+	ret[i] = 0;
+
+	return result;
 }
 
 void DestroyASTScanner(ASTScanner *scanner) { free(scanner); }
