@@ -89,15 +89,13 @@ Node *deleteNode(Node **proot, int x) {
 		delNode = rMin;
 	}
 
-	/* delete delNode, freeNode is the one needs to be free */
+	/* delete delNode, freeNode is the one needs to be free,
+	 * here delNode will not have two children */
 	freeNode = *delNode;
-	if ((*delNode)->left || (*delNode)->right) {
-		/* one child, freeNode is the one needs to be free */
-		if ((*delNode)->left) {
-			*delNode = (*delNode)->left;
-		} else if ((*delNode)->right) {
-			*delNode = (*delNode)->right;
-		}
+	if ((*delNode)->left) {
+		*delNode = (*delNode)->left;
+	} else if ((*delNode)->right) {
+		*delNode = (*delNode)->right;
 	} else {
 		/* no child */
 		*delNode = NULL;
